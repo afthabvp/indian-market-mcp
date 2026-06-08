@@ -1,0 +1,41 @@
+[project]
+name = "indian-market-mcp"
+version = "0.1.0"
+description = "MCP Server for Indian Stock Market — NSE, BSE, MCX, Mutual Funds, F&O, IPO, Bonds & more"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "Afthab VP" }]
+keywords = ["mcp", "indian-stock-market", "nse", "bse", "mutual-funds", "mcx", "trading"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+dependencies = [
+    "mcp[cli]>=1.0.0",
+    "httpx>=0.27.0",
+    "pydantic>=2.0.0",
+    "diskcache>=5.6.0",
+    "pandas>=2.0.0",
+    "yfinance>=0.2.0",
+]
+
+[project.optional-dependencies]
+angel = ["smartapi-python>=1.4.0", "pyotp>=2.9.0"]
+zerodha = ["kiteconnect>=5.0.0"]
+broker = ["smartapi-python>=1.4.0", "pyotp>=2.9.0", "kiteconnect>=5.0.0"]
+dev = ["pytest>=8.0.0", "ruff>=0.4.0"]
+
+[project.scripts]
+indian-market-mcp = "indian_market_mcp.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
