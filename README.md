@@ -3,7 +3,7 @@
   <p align="center">
     The most comprehensive <a href="https://modelcontextprotocol.io">Model Context Protocol</a> server for the Indian stock market.
     <br />
-    <strong>63 tools. Zero API keys. One install.</strong>
+    <strong>68 tools. Zero API keys. One install.</strong>
   </p>
   <p align="center">
     <a href="#quick-start">Quick Start</a> &bull;
@@ -46,20 +46,33 @@ Covers **NSE, BSE, MCX, Mutual Funds, F&O, ETFs, IPOs, Sovereign Gold Bonds, Com
 
 ## Quick Start
 
-### Option 1: Local (stdio) — no server needed
+### Option 1: Use the hosted server (zero install)
+
+```json
+{
+  "mcpServers": {
+    "indian-market": {
+      "type": "url",
+      "url": "https://indian-market-mcp-wweh.onrender.com/mcp"
+    }
+  }
+}
+```
+
+### Option 2: Local (stdio)
 
 ```bash
 uvx indian-market-mcp
 ```
 
-### Option 2: Remote URL — zero install for users
+### Option 3: Self-host HTTP
 
 ```bash
 MCP_TRANSPORT=http uvx indian-market-mcp
 # Server at http://localhost:8000/mcp
 ```
 
-### Option 3: Docker
+### Option 4: Docker
 
 ```bash
 docker build -t indian-market-mcp .
@@ -228,7 +241,7 @@ Ask your AI assistant in natural language:
 
 ---
 
-## All 63 Tools
+## All 68 Tools
 
 ### Stocks (NSE/BSE) — 9 tools
 
@@ -447,14 +460,14 @@ To get credentials:
 
 Host as a public URL so anyone can use it without installing anything — just like `https://mcp.tapetide.com/mcp`.
 
-### Use a hosted server
+### Use the hosted server
 
 ```json
 {
   "mcpServers": {
     "indian-market": {
       "type": "url",
-      "url": "https://your-server.com/mcp"
+      "url": "https://indian-market-mcp-wweh.onrender.com/mcp"
     }
   }
 }
