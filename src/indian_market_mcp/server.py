@@ -3,7 +3,11 @@ from __future__ import annotations
 import os
 from mcp.server.fastmcp import FastMCP
 
-mcp = FastMCP("Indian Market MCP")
+mcp = FastMCP(
+    "Indian Market MCP",
+    host=os.environ.get("MCP_HOST", "0.0.0.0"),
+    port=int(os.environ.get("MCP_PORT", "8000")),
+)
 
 from .tools import stocks, derivatives, indices, mutual_funds, etfs
 from .tools import commodities, currency, ipo, bonds, market, technicals
@@ -34,7 +38,11 @@ if os.environ.get("ANGEL_API_KEY") or os.environ.get("KITE_API_KEY"):
 
 
 def main():
-    mcp.run()
+    transport = os.environ.get("MCP_TRANSPORT", "stdio")
+    if transport == "http":
+        mcp.run(transport="streamable-http")
+    else:
+        mcp.run()
 
 
 if __name__ == "__main__":

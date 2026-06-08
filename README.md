@@ -249,6 +249,58 @@ All public data is free with no API keys required:
 | AMFI | Mutual fund NAVs (47,000+ schemes) |
 | Yahoo Finance | Commodities, currencies, historical data, technicals |
 
+## Remote HTTP Server
+
+Host as a URL (like `https://mcp.yourdomain.com/mcp`) so anyone can use it without installing:
+
+### Use the hosted version
+
+```json
+{
+  "mcpServers": {
+    "indian-market": {
+      "type": "url",
+      "url": "https://mcp.yourdomain.com/mcp"
+    }
+  }
+}
+```
+
+### Self-host with Docker
+
+```bash
+docker build -t indian-market-mcp .
+docker run -p 8000:8000 indian-market-mcp
+```
+
+Server runs at `http://localhost:8000/mcp`.
+
+### Self-host without Docker
+
+```bash
+MCP_TRANSPORT=http MCP_PORT=8000 uvx indian-market-mcp
+```
+
+### Deploy to cloud
+
+Works with any container platform:
+
+| Platform | Command |
+|----------|---------|
+| **Railway** | Connect GitHub repo, set `MCP_TRANSPORT=http` env var |
+| **Fly.io** | `fly launch` then `fly deploy` |
+| **Google Cloud Run** | `gcloud run deploy --source .` |
+| **AWS ECS / Fargate** | Push Docker image, create service |
+| **Render** | Connect repo, set Docker runtime |
+
+### Environment variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `MCP_TRANSPORT` | `stdio` | Set to `http` for remote server |
+| `MCP_HOST` | `0.0.0.0` | Host to bind |
+| `MCP_PORT` | `8000` | Port to bind |
+
 ## Development
 
 ```bash
@@ -256,6 +308,9 @@ git clone https://github.com/afthabvp/indian-market-mcp.git
 cd indian-market-mcp
 uv sync --all-extras
 uv run indian-market-mcp
+
+# Run as HTTP server locally
+MCP_TRANSPORT=http uv run indian-market-mcp
 ```
 
 ## License
