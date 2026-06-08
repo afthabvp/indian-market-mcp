@@ -7,7 +7,7 @@
   </p>
   <p align="center">
     <a href="#quick-start">Quick Start</a> &bull;
-    <a href="#all-63-tools">All Tools</a> &bull;
+    <a href="#all-68-tools">All Tools</a> &bull;
     <a href="#broker-mode">Broker Mode</a> &bull;
     <a href="#remote-http-server">Deploy</a> &bull;
     <a href="#examples">Examples</a>
@@ -22,7 +22,7 @@ Covers **NSE, BSE, MCX, Mutual Funds, F&O, ETFs, IPOs, Sovereign Gold Bonds, Com
 
 | Feature | indian-market-mcp | Tapetide | bshada/nse-bse | NseKit | Zerodha Official |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Total tools | **63** | 26 | 60 | 100+ | ~20 |
+| Total tools | **68** | 26 | 60 | 100+ | ~20 |
 | API key required | **No** | No | No | No | Yes |
 | Stocks + History | **Yes** | Yes | Yes | Yes | Yes |
 | F&O / Option Chain | **Yes** | No | Yes | Yes | No |
@@ -59,20 +59,27 @@ Covers **NSE, BSE, MCX, Mutual Funds, F&O, ETFs, IPOs, Sovereign Gold Bonds, Com
 }
 ```
 
-### Option 2: Local (stdio)
+### Option 2: Install from PyPI
+
+```bash
+pip install indian-market-mcp
+indian-market-mcp
+```
+
+### Option 3: Run without installing
 
 ```bash
 uvx indian-market-mcp
 ```
 
-### Option 3: Self-host HTTP
+### Option 4: Self-host HTTP
 
 ```bash
 MCP_TRANSPORT=http uvx indian-market-mcp
 # Server at http://localhost:8000/mcp
 ```
 
-### Option 4: Docker
+### Option 5: Docker
 
 ```bash
 docker build -t indian-market-mcp .
@@ -85,7 +92,7 @@ docker run -p 8000:8000 indian-market-mcp
 
 ### Claude Code
 
-Add to `~/.claude/settings.json`:
+Add to `~/.mcp.json`:
 
 ```json
 {
@@ -100,14 +107,14 @@ Add to `~/.claude/settings.json`:
 
 ### Claude Desktop
 
-Go to **Settings > MCP Servers > Add** and use the same config above. Or for a remote server:
+Go to **Settings > MCP Servers > Add**. Use the hosted URL or local config:
 
 ```json
 {
   "mcpServers": {
     "indian-market": {
       "type": "url",
-      "url": "https://your-server.com/mcp"
+      "url": "https://indian-market-mcp-wweh.onrender.com/mcp"
     }
   }
 }
@@ -147,7 +154,7 @@ Add to your VS Code `settings.json`:
 
 ### Windsurf / Cline / Any MCP Client
 
-Use stdio config (`command` + `args`) or remote URL (`https://your-server.com/mcp`) depending on what your client supports.
+Use stdio config (`command` + `args`) or remote URL (`https://indian-market-mcp-wweh.onrender.com/mcp`) depending on what your client supports.
 
 ---
 
@@ -179,6 +186,15 @@ Ask your AI assistant in natural language:
 "Compare SBI Bluechip vs Axis Bluechip — 1Y returns"
 "Get NAV history for scheme code 119598"
 "Show me top equity mutual fund categories"
+```
+
+### MF Analysis & Recommendations
+```
+"I want to invest in a mutual fund for 3 years — suggest the best one"
+"Find hidden gems in mid-cap mutual funds"
+"Analyze SBI Bluechip Fund — risk, returns, consistency"
+"If I did Rs 10,000 SIP in this fund for 3 years, what would be my returns?"
+"Compare these 3 funds and tell me which is best for moderate risk"
 ```
 
 ### Screener
@@ -378,6 +394,16 @@ Ask your AI assistant in natural language:
 | `detect_candlestick_patterns` | Detect 12+ patterns: Doji, Hammer, Inverted Hammer, Hanging Man, Shooting Star, Bullish Engulfing, Bearish Engulfing, Morning Star, Evening Star, Marubozu, Three White Soldiers, Three Black Crows. Includes bullish/bearish bias summary |
 | `scan_patterns_bulk` | Scan up to 20 stocks at once for specific patterns. E.g., find all stocks showing Bullish Engulfing |
 
+### MF Analysis — 5 tools
+
+| Tool | Description |
+|------|-------------|
+| `analyze_mutual_fund` | Deep analysis — returns (1M to 10Y CAGR), risk metrics (Sharpe, Sortino, max drawdown, volatility), rolling returns, consistency score |
+| `find_best_mutual_funds` | Smart ranking by investment horizon + risk appetite. Weighted scoring across returns, consistency, and risk-adjusted performance |
+| `find_hidden_gems` | Discover overlooked funds with exceptional risk-adjusted returns. Explains WHY each fund is a gem |
+| `mf_sip_returns` | Backtest SIP — total invested, current value, XIRR, units accumulated, month-by-month log |
+| `compare_mf_detailed` | Head-to-head comparison with risk metrics, rolling returns, and summary (best returns, most consistent, lowest risk) |
+
 ### Shareholding & Profile — 3 tools
 
 | Tool | Description |
@@ -546,7 +572,7 @@ Cache is stored at `~/.cache/indian-market-mcp/` (configurable, max 500MB).
 indian-market-mcp/
 ├── src/indian_market_mcp/
 │   ├── server.py                 # FastMCP entry point (stdio + HTTP)
-│   ├── tools/                    # 19 tool modules
+│   ├── tools/                    # 20 tool modules
 │   │   ├── stocks.py             # 9 tools — quotes, history, search, gainers/losers
 │   │   ├── derivatives.py        # 5 tools — option chain, PCR, max pain, futures, OI
 │   │   ├── indices.py            # 5 tools — indices, constituents, sectors
@@ -563,6 +589,7 @@ indian-market-mcp/
 │   │   ├── financials.py         # 6 tools — P&L, balance sheet, ratios, peers
 │   │   ├── candlestick.py        # 2 tools — pattern detection, bulk scan
 │   │   ├── shareholding.py       # 3 tools — holding pattern, profile
+│   │   ├── mf_analysis.py        # 5 tools — MF recommendations, hidden gems, SIP backtest
 │   │   ├── trading.py            # 5 tools — orders, GTT (broker mode)
 │   │   ├── portfolio.py          # 4 tools — holdings, positions, margins (broker mode)
 │   │   └── market_depth.py       # 2 tools — depth, LTP (broker mode)
@@ -604,6 +631,10 @@ ANGEL_API_KEY=xxx ANGEL_CLIENT_ID=xxx ANGEL_PASSWORD=xxx ANGEL_TOTP_SECRET=xxx u
 ### Running tests
 
 ```bash
+# Full validation of all 68 tools against live data
+uv run python test_all_tools.py
+
+# Unit tests
 uv run pytest
 ```
 
@@ -618,8 +649,8 @@ uv run ruff format .
 
 ## Roadmap
 
-- [ ] Publish to PyPI (`pip install indian-market-mcp`)
-- [ ] Hosted public server (like mcp.tapetide.com)
+- [x] Publish to PyPI (`pip install indian-market-mcp`)
+- [x] Hosted public server (`https://indian-market-mcp-wweh.onrender.com/mcp`)
 - [ ] BSE-specific tools (more granular BSE data)
 - [ ] Options Greeks calculator
 - [ ] Backtesting tools
