@@ -3,13 +3,13 @@ from __future__ import annotations
 import httpx
 from .cache import cached
 
-NAV_URL = "https://www.amfiindia.com/spages/NAVAll.txt"
+NAV_URL = "https://portal.amfiindia.com/spages/NAVAll.txt"
 HISTORY_URL = "https://api.mfapi.in/mf"
 
 
 @cached(ttl=3600)
 async def get_all_navs() -> list[dict]:
-    async with httpx.AsyncClient(timeout=30) as client:
+    async with httpx.AsyncClient(timeout=30, follow_redirects=True) as client:
         resp = await client.get(NAV_URL)
         resp.raise_for_status()
 

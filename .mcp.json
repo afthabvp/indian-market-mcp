@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "indian-market": {
+      "command": "/Users/afthab/indian-market-mcp/.venv/bin/python",
+      "args": ["-m", "indian_market_mcp.server"],
+      "cwd": "/Users/afthab/indian-market-mcp"
+    }
+  }
+}
