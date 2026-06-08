@@ -11,7 +11,7 @@ mcp = FastMCP(
 
 from .tools import stocks, derivatives, indices, mutual_funds, etfs
 from .tools import commodities, currency, ipo, bonds, market, technicals
-from .tools import screener, news, financials, candlestick, shareholding
+from .tools import screener, news, financials, candlestick, shareholding, mf_analysis
 
 stocks.register(mcp)
 derivatives.register(mcp)
@@ -29,6 +29,7 @@ news.register(mcp)
 financials.register(mcp)
 candlestick.register(mcp)
 shareholding.register(mcp)
+mf_analysis.register(mcp)
 
 if os.environ.get("ANGEL_API_KEY") or os.environ.get("KITE_API_KEY"):
     from .tools import trading, portfolio, market_depth
