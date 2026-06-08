@@ -2,7 +2,9 @@
 
 Full-featured [Model Context Protocol](https://modelcontextprotocol.io) server for Indian stock market data and trading.
 
-Covers **NSE, BSE, MCX, Mutual Funds, F&O, ETFs, IPOs, Sovereign Gold Bonds, Commodities, Currency, Technical Analysis** — plus optional broker integration for order placement and portfolio tracking.
+Covers **NSE, BSE, MCX, Mutual Funds, F&O, ETFs, IPOs, Sovereign Gold Bonds, Commodities, Currency, Technical Analysis, Stock Screener, Company Financials, Candlestick Patterns, News & Sentiment** — plus optional broker integration for order placement and portfolio tracking.
+
+**63 tools. Zero API keys. One install.**
 
 ## Quick Start
 
@@ -52,7 +54,7 @@ Add to your MCP configuration in editor settings.
 "Get Sovereign Gold Bond prices"
 ```
 
-## Available Tools (40+)
+## Available Tools (63)
 
 ### Stocks (NSE/BSE)
 | Tool | Description |
@@ -141,6 +143,45 @@ Add to your MCP configuration in editor settings.
 |------|-------------|
 | `get_technical_indicators` | SMA, EMA, RSI, MACD, Bollinger, VWAP |
 | `get_support_resistance` | Pivot-based S/R levels |
+
+### Stock Screener
+| Tool | Description |
+|------|-------------|
+| `screen_stocks` | Screen by price, change%, volume, sector, 52w proximity |
+| `screen_by_fundamentals` | Screen by PE, PB, ROE, market cap, dividend yield |
+| `run_preset_screen` | Pre-built screens: top_gainers, near_52w_high, penny_stocks, large_cap_value, high_dividend etc. |
+
+### News & Sentiment
+| Tool | Description |
+|------|-------------|
+| `get_market_news` | Latest Indian market news |
+| `get_stock_news` | News for a specific stock |
+| `get_sector_news` | News for a sector (IT, Banking, Pharma etc.) |
+| `get_nse_announcements` | Official NSE corporate announcements |
+| `get_board_meetings` | Board meeting dates |
+
+### Company Financials
+| Tool | Description |
+|------|-------------|
+| `get_income_statement` | P&L — revenue, expenses, net income, EPS |
+| `get_balance_sheet` | Assets, liabilities, equity, debt |
+| `get_cash_flow` | Operating, investing, financing cash flows |
+| `get_key_ratios` | 30+ ratios — PE, PB, ROE, ROCE, margins, growth |
+| `get_peer_comparison` | Compare with industry peers |
+| `get_nse_financial_results` | Quarterly results filed with NSE |
+
+### Candlestick Patterns
+| Tool | Description |
+|------|-------------|
+| `detect_candlestick_patterns` | Detect 12+ patterns — Doji, Hammer, Engulfing, Morning Star, Evening Star, Marubozu, Three White Soldiers etc. |
+| `scan_patterns_bulk` | Scan multiple stocks for specific patterns |
+
+### Shareholding & Profile
+| Tool | Description |
+|------|-------------|
+| `get_shareholding_pattern` | Promoter, FII, DII, public holding % |
+| `get_company_profile` | Full company profile with fundamentals |
+| `get_bulk_deals` | Recent bulk and block deals |
 
 ## Broker Mode (Optional)
 

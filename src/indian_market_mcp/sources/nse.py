@@ -176,3 +176,41 @@ async def get_most_active_by_volume() -> dict:
 @cached(ttl=120)
 async def get_most_active_by_value() -> dict:
     return await _fetch("live-analysis-most-active-securities", {"index": "value"})
+
+
+@cached(ttl=600)
+async def get_shareholding(symbol: str) -> dict:
+    return await _fetch("corporates-shareholding", {"index": "equities", "symbol": symbol.upper()})
+
+
+@cached(ttl=600)
+async def get_board_meetings(symbol: str) -> dict:
+    return await _fetch("corporates-boardMeetings", {"index": "equities", "symbol": symbol.upper()})
+
+
+@cached(ttl=600)
+async def get_announcements(index: str = "equities", symbol: str = "") -> dict:
+    params = {"index": index}
+    if symbol:
+        params["symbol"] = symbol.upper()
+    return await _fetch("corporates-announcements", params)
+
+
+@cached(ttl=300)
+async def get_nifty500_list() -> dict:
+    return await _fetch("equity-stockIndices", {"index": "NIFTY 500"})
+
+
+async def _fetch_raw(url: str) -> bytes:
+    client = await _get_client()
+    resp = await client.get(url, cookies=_cookies)
+    if resp.status_code == 403:
+        await _refresh_cookies()
+        resp = await client.get(url, cookies=_cookies)
+    resp.raise_for_status()
+    return resp.content
+
+
+@cached(ttl=600)
+async def get_financial_results(symbol: str) -> dict:
+    return await _fetch("corporates-financial-results-data", {"index": "equities", "symbol": symbol.upper()})
